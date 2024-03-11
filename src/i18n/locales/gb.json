@@ -337,7 +337,8 @@
     "line-maps": "Line Maps",
     "login-singup": "Login/Signup",
     "404-pages": "404 Pages",
-    "faq": "Faq"
+    "faq": "Faq",
+    "users": "User"
   },
   "messages": {
     "all": "See all messages",
@@ -492,7 +493,12 @@
       "lastName": "Last Name",
       "status": "Status",
       "country": "Country",
-      "location": "Location"
+      "location": "Location",
+      "userName": "UserName",
+      "fullName": "FullName",
+      "phone": "Phone",
+      "creationDate": "Creation Date",
+      "id": "ID"
     }
   },
   "user": {

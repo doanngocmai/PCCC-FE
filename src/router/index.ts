@@ -144,6 +144,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../pages/admin/users/components/index.vue'),
       },
       {
+        name: 'add',
+        path: 'add',
+        component: () => import('../pages/admin/users/components/Header.vue'),
+      },
+      {
         name: 'pages',
         path: 'pages',
         component: RouteViewComponent,

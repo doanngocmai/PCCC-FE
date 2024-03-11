@@ -72,6 +72,13 @@ export default {
       ],
     },
     {
+      name: 'users',
+      displayName: 'menu.users',
+      meta: {
+        icon: 'vuestic-iconset-dashboard',
+      },
+    },
+    {
       name: 'ui',
       displayName: 'menu.uiElements',
       meta: {

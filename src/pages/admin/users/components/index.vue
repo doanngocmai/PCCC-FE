@@ -1,26 +1,32 @@
-<!-- <template>
+<template>
   <div>
     <va-card class="markup-tables mb-8">
-      <va-card-title>{{ t('tables.basic') }}</va-card-title>
+      <!-- <va-card-title>{{ t('tables.basic') }}</va-card-title> -->
       <va-card-content class="overflow-auto">
         <table class="va-table w-full">
           <thead>
             <tr>
-              <th>{{ t('tables.headings.name') }}</th>
+              <th>{{ t('tables.headings.id') }}</th>
+              <th>{{ t('tables.headings.userName') }}</th>
+              <th>{{ t('tables.headings.fullName') }}</th>
+              <th>{{ t('tables.headings.phone') }}</th>
               <th>{{ t('tables.headings.email') }}</th>
-              <th>{{ t('tables.headings.country') }}</th>
               <th>{{ t('tables.headings.status') }}</th>
+              <th>{{ t('tables.headings.creationDate') }}</th>
             </tr>
           </thead>
 
           <tbody>
             <tr v-for="user in users" :key="user.id">
+              <td>{{ user.id }}</td>
+              <td>{{ user.username }}</td>
               <td>{{ user.fullName }}</td>
+              <td>{{ user.phone }}</td>
               <td>{{ user.email }}</td>
-              <td>{{ user.country }}</td>
               <td>
-                <va-badge :text="user.status" :color="getStatusColor(user.status)" />
+                <va-badge :text="getStatusText(user.status)" :color="getStatusColor(user.status)" />
               </td>
+              <td>{{ user.createdDate }}</td>
             </tr>
           </tbody>
         </table>
@@ -32,81 +38,42 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import userApi from '../'
+  import userApi from '../api/UserApi'
 
   const { t } = useI18n()
 
   const users = ref([])
 
-  function getStatusColor(status: string) {
-    if (status === 'paid') {
+  const getStatusColor = (status: number) => {
+    if (status === 1) {
       return 'success'
-    }
-
-    if (status === 'processing') {
-      return 'info'
     }
 
     return 'danger'
   }
+  const getStatusText = (status: number) => {
+    if (status === 1) {
+      return 'Đang hoạt động'
+    }
 
-  // Gọi hàm getListUser khi component được tạo
+    return 'Ngừng hoạt động'
+  }
+  const showAddCategory = ref(false)
+  const title = ref('Tài khoản')
+
+  const loading = ref(false)
+
   onMounted(async () => {
     try {
+      // Set loading state to true
+      loading.value = true
+
       const userList = await userApi.getListUser()
-      users.value = userList // Gán dữ liệu từ API vào biến users
+      users.value = userList.data.data
     } catch (error) {
       console.error('Error fetching user list:', error)
+    } finally {
+      loading.value = false
     }
   })
-</script> -->
-<template>
-  <va-card class="markup-tables mb-8">
-    <va-card-title>{{ t('tables.basic') }}</va-card-title>
-    <va-card-content class="overflow-auto">
-      <table class="va-table w-full">
-        <thead>
-          <tr>
-            <th>{{ t('tables.headings.name') }}</th>
-            <th>{{ t('tables.headings.email') }}</th>
-            <th>{{ t('tables.headings.country') }}</th>
-            <th>{{ t('tables.headings.status') }}</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr v-for="user in users" :key="user.id">
-            <td>{{ user.fullName }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.country }}</td>
-            <td>
-              <va-badge :text="user.status" :color="getStatusColor(user.status)" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </va-card-content>
-  </va-card>
-</template>
-
-<script setup lang="ts">
-  import { ref } from 'vue'
-  import { useI18n } from 'vue-i18n'
-  import data from '../../../../data/users.json'
-
-  const { t } = useI18n()
-
-  const users = ref(data.slice(0, 8))
-
-  function getStatusColor(status: string) {
-    if (status === 'paid') {
-      return 'success'
-    }
-
-    if (status === 'processing') {
-      return 'info'
-    }
-
-    return 'danger'
-  }
 </script>
