@@ -14,7 +14,7 @@
 
         <tbody>
           <tr v-for="user in users" :key="user.id">
-            <td>{{ user.name }}</td>
+            <td>{{ user.fullName }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.country }}</td>
             <td>
@@ -26,7 +26,7 @@
     </va-card-content>
   </va-card>
 
-  <va-card>
+  <!-- <va-card>
     <va-card-title>{{ t('tables.stripedHoverable') }}</va-card-title>
     <va-card-content class="overflow-auto">
       <table class="va-table va-table--striped va-table--hoverable w-full">
@@ -51,13 +51,13 @@
         </tbody>
       </table>
     </va-card-content>
-  </va-card>
+  </va-card> -->
 </template>
 
 <script setup lang="ts">
   import { ref } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import data from '../../../../data/tables/markup-table/data.json'
+  import data from '../../../../data/users.json'
 
   const { t } = useI18n()
 

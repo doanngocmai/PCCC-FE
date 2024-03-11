@@ -128,15 +128,20 @@ const routes: Array<RouteRecordRaw> = [
               wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Tables',
             },
           },
-          {
-            name: 'data',
-            path: 'data',
-            component: () => import('../pages/admin/tables/data-tables/DataTables.vue'),
-            meta: {
-              wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Tables',
-            },
-          },
+          // {
+          //   name: 'data',
+          //   path: 'data',
+          //   component: () => import('../pages/admin/tables/data-tables/DataTables.vue'),
+          //   meta: {
+          //     wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Tables',
+          //   },
+          // },
         ],
+      },
+      {
+        name: 'users',
+        path: 'users',
+        component: () => import('../pages/admin/users/components/index.vue'),
       },
       {
         name: 'pages',

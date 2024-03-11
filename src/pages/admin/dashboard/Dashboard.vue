@@ -42,6 +42,7 @@
   .dashboard {
     .va-card {
       margin-bottom: 0 !important;
+
       &__title {
         display: flex;
         justify-content: space-between;
