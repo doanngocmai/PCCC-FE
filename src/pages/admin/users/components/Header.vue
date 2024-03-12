@@ -1,91 +1,73 @@
 <template>
-  <div class="modals grid grid-cols-12 gap-6">
-    <va-card class="modals-list larger-padding col-span-12">
-      <va-card-title>{{ t('modal.title') }}</va-card-title>
-      <va-card-content>
-        <va-button class="mr-2 mb-2" color="info" @click="showMediumModal = true">
-          {{ t('modal.medium') }}
-        </va-button>
-      </va-card-content>
-    </va-card>
-
-    <va-card class="modals-list larger-padding col-span-12">
-      <va-card-title>{{ t('modal.titleOptions') }}</va-card-title>
-      <va-card-content>
-        <va-button class="mb-2 mr-2" color="danger" @click="showBlurredModal = true">
-          {{ t('modal.blurred') }}
-        </va-button>
-        <va-modal
-          v-model="showAnchorModal"
-          anchor-class="inline-flex"
-          :title="t('modal.withAnchorSlot')"
-          :message="t('modal.message')"
-          :ok-text="t('modal.confirm')"
-          :cancel-text="t('modal.cancel')"
-        >
-          <template #anchor="{ show }">
-            <va-button class="mb-2 mr-2" @click="show">
-              {{ t('modal.withAnchorSlot') }}
-            </va-button>
-          </template>
-        </va-modal>
-      </va-card-content>
-    </va-card>
-
-    <!--//Modals-->
-    <va-modal
-      v-model="showMediumModal"
-      :title="t('modal.mediumTitle')"
-      :ok-text="t('modal.confirm')"
-      :cancel-text="t('modal.cancel')"
-      :message="t('modal.message')"
-    />
-    <va-modal
-      v-model="showLargeModal"
-      size="large"
-      :title="t('modal.largeTitle')"
-      :message="t('modal.message')"
-      :ok-text="t('modal.confirm')"
-      :cancel-text="t('modal.cancel')"
-    />
-    <va-modal
-      v-model="showFullscreenModal"
-      :title="t('modal.fullscreen')"
-      :ok-text="t('modal.confirm')"
-      :cancel-text="t('modal.cancel')"
-      :message="t('modal.message')"
-      fullscreen
-    />
-    <va-modal
-      v-model="showStaticModal"
-      :title="t('modal.staticTitle')"
-      :ok-text="t('modal.confirm')"
-      :cancel-text="t('modal.cancel')"
-      :message="t('modal.staticMessage')"
-      no-dismiss
-    />
-    <va-modal
-      v-model="showBlurredModal"
-      :title="t('modal.blurred')"
-      :message="t('modal.message')"
-      :ok-text="t('modal.confirm')"
-      :cancel-text="t('modal.cancel')"
-      blur
-    />
-  </div>
+  <CButton color="primary" @click="toggleScrollableDemo">Launch demo modal</CButton>
+  <CModal
+    scrollable
+    :visible="visibleScrollableDemo"
+    aria-labelledby="ScrollingLongContentExampleLabel2"
+    @close="toggleScrollableDemo"
+    @ok="submit"
+  >
+    <CModalHeader>
+      <CModalTitle id="ScrollingLongContentExampleLabel2">Modal title</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CForm class="row g-3 needs-validation" novalidate :validated="validatedCustom01" @submit="handleSubmitCustom01">
+        <CCol md="4">
+          <CFormInput id="validationCustom01" v-model="formData.field1" label="First name" required />
+          <CFormFeedback :valid="validatedCustom01" :invalid="!validatedCustom01">
+            {{ validatedCustom01 ? 'Looks good!' : '' }}
+          </CFormFeedback>
+        </CCol>
+        <CCol md="4">
+          <CFormInput id="validationCustom02" v-model="formData.field2" label="Email" required />
+          <CFormFeedback :valid="validatedCustom01" :invalid="!validatedCustom01">
+            {{ validatedCustom01 ? 'No good!' : '' }}
+          </CFormFeedback>
+        </CCol>
+      </CForm>
+    </CModalBody>
+  </CModal>
 </template>
 
-<script setup lang="ts">
+<script setup>
   import { ref } from 'vue'
-  import { useI18n } from 'vue-i18n'
+  import {
+    CButton,
+    CModal,
+    CModalHeader,
+    CModalTitle,
+    CModalBody,
+    CForm,
+    CFormInput,
+    CCol,
+    CFormFeedback,
+  } from '@coreui/vue'
 
-  const { t } = useI18n()
+  const visibleScrollableDemo = ref(false)
+  const validatedCustom01 = ref(false)
 
-  const showMediumModal = ref(false)
-  const showLargeModal = ref(false)
-  const showFullscreenModal = ref(false)
-  const showStaticModal = ref(false)
+  const toggleScrollableDemo = () => {
+    visibleScrollableDemo.value = !visibleScrollableDemo.value
+  }
 
-  const showBlurredModal = ref(false)
-  const showAnchorModal = ref(false)
+  const formData = ref({
+    field1: '',
+    field2: '',
+  })
+
+  const handleSubmitCustom01 = (event) => {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    validatedCustom01.value = true
+  }
+
+  const submit = () => {
+    // Your submit logic here
+    console.log('Submit method called')
+    // Close the modal if needed
+    toggleScrollableDemo()
+  }
 </script>

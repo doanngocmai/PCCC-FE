@@ -13,17 +13,17 @@ body {
   line-height: 1;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-strong,
-b {
-  line-height: 1.2;
-  font-weight: 600;
-}
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6,
+// strong,
+// b {
+//   line-height: 1.2;
+//   font-weight: 600;
+// }
 
 code,
 kbd,
@@ -37,4 +37,12 @@ pre {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.title {
+  font-size: 1.5em !important; 
+  font-weight: 600;
+}
+.va-table th, .va-modal__title{
+  font-size: 14px !important; 
+  font-weight: 600;
 }

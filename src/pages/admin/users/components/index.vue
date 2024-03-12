@@ -1,8 +1,9 @@
 <template>
   <div>
     <va-card class="markup-tables mb-8">
-      <!-- <va-card-title>{{ t('tables.basic') }}</va-card-title> -->
+      <va-card-title class="title">{{ t('title.users') }}</va-card-title>
       <va-card-content class="overflow-auto">
+        <AddOrEditUser />
         <table class="va-table w-full">
           <thead>
             <tr>
@@ -39,6 +40,7 @@
   import { ref, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
   import userApi from '../api/UserApi'
+  import AddOrEditUser from './AddOrEditUser.vue'
 
   const { t } = useI18n()
 
@@ -58,8 +60,6 @@
 
     return 'Ngừng hoạt động'
   }
-  const showAddCategory = ref(false)
-  const title = ref('Tài khoản')
 
   const loading = ref(false)
 

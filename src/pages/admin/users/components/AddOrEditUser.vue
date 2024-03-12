@@ -1,62 +1,161 @@
 <template>
-  <a-modal :visible="visible" :footer="null" :title="data ? 'Cập nhật' : 'Tạo tài khoản'" @cancel="handleCancel">
-    <a-form
-      :form="form"
-      :name="data ? 'updateAccount' : 'createAccount'"
-      label-align="left"
-      :initial-values="initialValues"
-      @finish="onFinish"
+  <div class="modals flex justify-end">
+    <va-button class="mr-2 mb-2" color="info" @click="showMediumModal = true">
+      {{ t('modalTitle.addUser') }}
+    </va-button>
+
+    <va-modal
+      v-model="showMediumModal"
+      :title="data ? t('modalTitle.updateUser') : t('modalTitle.addUser')"
+      :ok-text="t('modal.confirm')"
+      :cancel-text="t('modal.cancel')"
+      @ok="onSubmit"
     >
-      <a-form-item
-        label="Họ tên"
-        name="name"
-        :rules="[
-          { type: 'string', message: 'Nhập tài khoản' },
-          { required: true, message: 'Vui lòng nhập tài khoản!' },
-          { min: 3, max: 50, message: 'Vui lòng nhập từ 3 đến 50 ký tự!' },
-        ]"
-      >
-        <a-input placeholder="Nhập tài khoản" />
-      </a-form-item>
-      <a-form-item :wrapper-col="{ xs: { offset: 0, span: 24 }, sm: { offset: 8, span: 16 } }">
-        <a-button
-          :loading="isLoading"
-          :style="{
-            minWidth: '70px',
-            fontWeight: 'bold',
-            borderColor: data ? '#8000FF' : '#00abba',
-            color: data ? '#8000FF' : '#00abba',
-            borderRadius: '5px',
-          }"
-          html-type="submit"
-        >
-          {{ data ? 'Cập nhật' : 'Tạo tài khoản' }}
-        </a-button>
-      </a-form-item>
-    </a-form>
-  </a-modal>
+      <CForm style="width: 500px">
+        <CRow class="mb-3">
+          <CFormLabel for="userName" class="col-sm-2 col-form-label">UserName</CFormLabel>
+          <CCol sm="10">
+            <CFormInput
+              id="userName"
+              v-model="form.userName"
+              type="text"
+              feedback-invalid="Please provide a valid city."
+              required
+            />
+          </CCol>
+        </CRow>
+        <CRow class="mb-3">
+          <CFormLabel for="fullName" class="col-sm-2 col-form-label">FullName</CFormLabel>
+          <CCol sm="10">
+            <CFormInput id="fullName" v-model="form.fullName" type="text" />
+          </CCol>
+        </CRow>
+        <CRow class="mb-3">
+          <CFormLabel for="inputPhone" class="col-sm-2 col-form-label">Phone</CFormLabel>
+          <CCol sm="10">
+            <CFormInput id="inputPhone" v-model="form.phone" type="text" />
+          </CCol>
+        </CRow>
+        <CRow class="mb-3">
+          <CFormLabel for="inputEmail" class="col-sm-2 col-form-label">Email</CFormLabel>
+          <CCol sm="10">
+            <CFormInput id="inputEmail" v-model="form.email" type="email" />
+          </CCol>
+        </CRow>
+        <CRow class="mb-3">
+          <CFormLabel for="address" class="col-sm-2 col-form-label">Address</CFormLabel>
+          <CCol sm="10">
+            <CFormInput id="address" v-model="form.address" type="text" />
+          </CCol>
+        </CRow>
+        <CRow class="mb-3">
+          <CFormLabel for="amount" class="col-sm-2 col-form-label">Amount</CFormLabel>
+          <CCol sm="10">
+            <CFormInput id="amount" v-model="form.amount" type="text" />
+          </CCol>
+        </CRow>
+        <fieldset class="row mb-3">
+          <legend class="col-form-label col-sm-2 pt-0">Sex</legend>
+          <div class="col-sm-10">
+            <div class="form-check">
+              <input
+                id="female"
+                v-model="form.sex"
+                class="form-check-input"
+                type="radio"
+                name="gridRadios"
+                value="true"
+                aria-checked="true"
+              />
+              <label class="form-check-label" for="female">Nữ</label>
+            </div>
+            <div class="form-check">
+              <input
+                id="male"
+                v-model="form.sex"
+                class="form-check-input"
+                type="radio"
+                name="gridRadios"
+                value="false"
+              />
+              <label class="form-check-label" for="male">Nam</label>
+            </div>
+          </div>
+        </fieldset>
+        <CRow class="mb-3">
+          <CFormLabel for="inputPassword" class="col-sm-2 col-form-label">Password</CFormLabel>
+          <CCol sm="10">
+            <CFormInput id="inputPassword" v-model="form.password" type="password" />
+          </CCol>
+        </CRow>
+        <CRow class="mb-3">
+          <div class="col-sm-10 offset-sm-2">
+            <CFormCheck id="isActive" v-model="form.isActive" type="checkbox" label="IsActive" />
+          </div>
+        </CRow>
+      </CForm>
+    </va-modal>
+  </div>
 </template>
-
 <script setup>
-  import { ref, reactive } from 'vue'
+  import { ref } from 'vue'
+  import { useI18n } from 'vue-i18n'
+  import userApi from '../api/UserApi'
+  import { CForm, CFormLabel, CFormInput, CRow, CCol, CFormCheck } from '@coreui/vue'
 
-  const visible = ref(false)
+  const { t } = useI18n()
+  const showMediumModal = ref(false)
   const data = ref(null)
   const isLoading = ref(false)
-  const form = ref(null)
 
-  const initialValues = reactive({
-    name: null,
-    // Add other initial values here
+  const form = ref({
+    userName: '',
+    fullName: '',
+    phone: '',
+    email: '',
+    address: '',
+    amount: '',
+    sex: true,
+    password: '',
+    isActive: 0,
   })
 
-  const handleCancel = () => {
-    // Handle cancel logic here
-  }
+  const onSubmit = async () => {
+    console.log('OK')
+    try {
+      isLoading.value = true
+      console.log(isLoading.value)
+      // const apiUrl = userApi.createUser()
+      // console.log(JSON.stringify(form.value))
+      // const response = await fetch(apiUrl, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json;charset=utf-8', // Specify the correct content type
+      //   },
+      //   body: JSON.stringify(form.value),
+      // })
+      const response = await userApi.createUser(form.value)
+      if (response.ok) {
+        console.log('User created successfully')
 
-  const onFinish = () => {
-    // Handle finish logic here
+        form.value = {
+          userName: '',
+          fullName: '',
+          phone: '',
+          email: '',
+          address: '',
+          amount: '',
+          sex: '',
+          password: '',
+          isActive: 1,
+        }
+      } else {
+        console.error('Error creating user:', response.statusText)
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+    } finally {
+      isLoading.value = false
+    }
   }
-
-  // Additional setup logic if needed
 </script>

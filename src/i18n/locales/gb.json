@@ -365,6 +365,10 @@
     "withAnchorSlot": "With anchor slot",
     "message": "There are three species of zebras: the plains zebra, the mountain zebra and the Grévy's zebra. The plains zebra and the mountain zebra belong to the subgenus Hippotigris, but Grévy's\n        zebra is the sole species of subgenus\n        Dolichohippus. The latter resembles an ass, to which it is closely\n        related, while the former two are more\n        horse-like. All three belong to the genus Equus, along with other living\n        equids."
   },
+  "modalTitle": {
+    "addUser": "Thêm mới User",
+    "updateUser": "Cập nhật User"
+  },
   "dropdown": {
     "default": "Default",
     "withArrow": "With arrow",
@@ -466,6 +470,7 @@
     "routerSupport": "Router Support"
   },
   "tables": {
+    "users" : "Users",
     "basic": "Basic Table",
     "stripedHoverable": "Striped, Hoverable",
     "labelsActions": "Labels, Actions as Buttons",
@@ -582,6 +587,12 @@
   },
   "tabs": {
     "alignment": "Tabs Alignment",
+    "overflow": "Tabs Overflow",
+    "hidden": "Tabs with Hidden slider",
+    "grow": "Tabs Grow"
+  },
+  "title": {
+    "users": "Users",
     "overflow": "Tabs Overflow",
     "hidden": "Tabs with Hidden slider",
     "grow": "Tabs Grow"
