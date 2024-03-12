@@ -98,7 +98,7 @@
   </div>
 </template>
 <script setup>
-  import { ref } from 'vue'
+  import { reactive, ref } from 'vue'
   import { useI18n } from 'vue-i18n'
   import userApi from '../api/UserApi'
   import { CForm, CFormLabel, CFormInput, CRow, CCol, CFormCheck } from '@coreui/vue'
@@ -108,7 +108,7 @@
   const data = ref(null)
   const isLoading = ref(false)
 
-  const form = ref({
+  const form = reactive({
     userName: '',
     fullName: '',
     phone: '',
@@ -134,7 +134,7 @@
       //   },
       //   body: JSON.stringify(form.value),
       // })
-      const response = await userApi.createUser(form.value)
+      const response = await userApi.createUser(form)
       if (response.ok) {
         console.log('User created successfully')
 
