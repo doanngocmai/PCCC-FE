@@ -107,8 +107,7 @@
   const showMediumModal = ref(false)
   const data = ref(null)
   const isLoading = ref(false)
-
-  const form = reactive({
+  const initialState = {
     userName: '',
     fullName: '',
     phone: '',
@@ -118,7 +117,9 @@
     sex: true,
     password: '',
     isActive: 0,
-  })
+  }
+
+  const form = reactive({ ...initialState })
 
   const onSubmit = async () => {
     console.log('OK')
@@ -138,17 +139,7 @@
       if (response.ok) {
         console.log('User created successfully')
 
-        form.value = {
-          userName: '',
-          fullName: '',
-          phone: '',
-          email: '',
-          address: '',
-          amount: '',
-          sex: '',
-          password: '',
-          isActive: 1,
-        }
+        Object.assign(form, initialState)
       } else {
         console.error('Error creating user:', response.statusText)
       }
