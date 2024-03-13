@@ -470,7 +470,7 @@
     "routerSupport": "Router Support"
   },
   "tables": {
-    "users" : "Users",
+    "users": "Users",
     "basic": "Basic Table",
     "stripedHoverable": "Striped, Hoverable",
     "labelsActions": "Labels, Actions as Buttons",
